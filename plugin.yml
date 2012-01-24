@@ -1,0 +1,43 @@
+name: PlayerFreeze
+main : com.andersonhc.PlayerFreeze.PlayerFreeze
+version: 1.3
+softdepend: [Permissions]
+
+commands:
+  warn:
+    description: Warns a player.
+    permission: playerfreeze.warn
+    usage: /<command> all | list | (player) [reason]
+  freeze:
+    description: Freezes a player.
+    permission: playerfreeze.freeze
+    usage: /<command> all | list | (player) [reason]
+  unwarn:
+    description: Unwarns or unfreezes players.
+    permission: playerfreeze.warn
+    usage: /<command> all | (player)
+  unfreeze:
+    description: Unwarns or unfreezes players.
+    permission: playerfreeze.freeze
+    usage: /<command> all | (player)
+  acknowledge:
+    description: Allows a player to acknowledge his warning.
+    usage: /<command>
+  tpf:
+    description: Summons a frozen player next to you.
+    permission: playerfreeze.freeze
+    usage: /<command> (player)
+    
+permissions:
+  playerfreeze.freeze:
+    description: Freeze/unfreeze players
+    default: op
+  playerfreeze.warn:
+    description: Warn/unwarn players
+    default: op
+  playerfreeze.freezeall:
+    description: Freeze/unfreeze all online players
+    default: op
+  playerfreeze.warnall:
+    description: Warn/unwarn all online players
+    default: op
