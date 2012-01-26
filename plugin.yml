@@ -1,7 +1,6 @@
 name: PlayerFreeze
 main : com.andersonhc.PlayerFreeze.PlayerFreeze
-version: 1.3
-softdepend: [Permissions]
+version: 1.4
 
 commands:
   warn:

@@ -8,12 +8,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.andersonhc.PlayerFreeze.command.*;
-import com.andersonhc.PlayerFreeze.listener.*;
+import com.andersonhc.PlayerFreeze.command.AcknowledgeCommand;
+import com.andersonhc.PlayerFreeze.command.FreezeCommand;
+import com.andersonhc.PlayerFreeze.command.TpfCommand;
+import com.andersonhc.PlayerFreeze.command.UnWarnCommand;
+import com.andersonhc.PlayerFreeze.command.WarnCommand;
 
 public final class PlayerFreeze extends JavaPlugin {
 	private Map<String, String> frozenUsers = new HashMap<String, String>();
@@ -41,16 +42,7 @@ public final class PlayerFreeze extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		PluginManager pm = getServer().getPluginManager();
-		PlayerFreezePlayerListener pl = new PlayerFreezePlayerListener(this);
-		PlayerFreezeBlockListener bl = new PlayerFreezeBlockListener(this);
-		
-		pm.registerEvent(Event.Type.PLAYER_MOVE, pl, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.PLAYER_TELEPORT, pl, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.PLAYER_JOIN, pl, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.BLOCK_BREAK, bl, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.BLOCK_DAMAGE, bl, Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.BLOCK_PLACE, bl, Event.Priority.Normal, this);
+		getServer().getPluginManager().registerEvents(new PlayerFreezeListener(this), this);;
 		
 		getCommand("warn").setExecutor(new WarnCommand(this));
 		getCommand("unwarn").setExecutor(new UnWarnCommand(this));
@@ -109,7 +101,7 @@ public final class PlayerFreeze extends JavaPlugin {
 				Boolean found = false;
 				int nameLength = name.length();
 				for (String n: warnedUsers.keySet()) {
-					if (n.length() > nameLength) {
+					if (n.length() >= nameLength) {
 						if (n.substring(0, (nameLength)).equalsIgnoreCase(name)) {
 							//return null if more than 1 player matches
 							if (found) return null;
@@ -119,7 +111,7 @@ public final class PlayerFreeze extends JavaPlugin {
 					}
 				}
 				for (String n: frozenUsers.keySet()) {
-					if (n.length() > nameLength) {
+					if (n.length() >= nameLength) {
 						if (n.substring(0, (nameLength)).equalsIgnoreCase(name)) {
 							//return null if more than 1 player matches
 							if (found) return null;
