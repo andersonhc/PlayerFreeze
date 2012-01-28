@@ -47,6 +47,11 @@ public class FreezeCommand implements CommandExecutor {
 
 			for (int i = 0; i < plugin.getServer().getOnlinePlayers().length; i++) {
 				Player warned = plugin.getServer().getOnlinePlayers()[i];
+				if(!plugin.isFreezable(warned)) {
+					sender.sendMessage(ChatColor.YELLOW + "Player "+ warned.getName() +" can't be frozen!");
+					continue;
+				}
+				
 				if (warned == sender) {
 					warned.sendMessage(ChatColor.BLUE + plugin.getString("FREEZEALL_NOTIFY_PLAYERS"));
 				}
@@ -88,7 +93,11 @@ public class FreezeCommand implements CommandExecutor {
 						message = message.concat(" " + args[count]);
 					}
 				}
-				plugin.Freeze(warned, sender, message);
+				if(!plugin.isFreezable(warned)) {
+					sender.sendMessage(ChatColor.RED + "Player "+ warned.getName() +" can't be frozen!");
+				}else{
+					plugin.Freeze(warned, sender, message);
+				}
 			} else {
 				sender.sendMessage(ChatColor.BLUE + "Player " + ChatColor.AQUA + args[0] + ChatColor.BLUE + plugin.getString("GENERAL_INVALID_PLAYER"));
 			}
