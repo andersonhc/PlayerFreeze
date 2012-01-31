@@ -30,6 +30,7 @@ public final class PlayerFreeze extends JavaPlugin {
 			FREEZE ("playerfreeze.freeze"),
 			WARN ("playerfreeze.warn"),
 			FREEZEALL ("playerfreeze.freezeall"),
+			FREEZEPROT("playerfreeze.freezeprotection"),
 			WARNALL ("playerfreeze.warnall");
 		private final String permissionName;
 		PluginPermission (String permissionName) {
@@ -330,6 +331,10 @@ public final class PlayerFreeze extends JavaPlugin {
 			     hasPermission(player, PluginPermission.WARNALL) ||
 			     hasPermission(player, PluginPermission.FREEZE)  ||
                  hasPermission(player, PluginPermission.FREEZEALL));  
+	}
+	
+	public boolean isFreezable(Player player) {
+		return !(hasPermission(player, PluginPermission.FREEZEPROT));
 	}
 
 	public boolean isAdmin(CommandSender sender) {
