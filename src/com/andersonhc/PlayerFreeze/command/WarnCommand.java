@@ -55,7 +55,8 @@ public class WarnCommand implements CommandExecutor {
 				} else if (plugin.isAdmin(sender))
 					warned.sendMessage(ChatColor.BLUE + plugin.getString("WARNALL_NOTIFY_ADMINS") + ChatColor.AQUA + playerName + ChatColor.BLUE);
 				else {
-					plugin.Warn(warned, sender, message);
+                    if(plugin.isWarnable(warned))
+					   plugin.Warn(warned, sender, message);
 				}
 			}
 			return true;
@@ -90,7 +91,8 @@ public class WarnCommand implements CommandExecutor {
 						message = message.concat(" " + args[count]);
 					}
 				}
-				plugin.Warn(warned, sender, message);
+                if(plugin.isWarnable(warned))
+				    plugin.Warn(warned, sender, message);
 			} else {
 				sender.sendMessage(ChatColor.BLUE + "Player " + ChatColor.AQUA + args[0] + ChatColor.BLUE + plugin.getString("GENERAL_INVALID_PLAYER"));
 			}
