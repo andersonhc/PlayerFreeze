@@ -31,7 +31,8 @@ public final class PlayerFreeze extends JavaPlugin {
 			WARN ("playerfreeze.warn"),
 			FREEZEALL ("playerfreeze.freezeall"),
 			FREEZEPROT("playerfreeze.freezeprotection"),
-			WARNALL ("playerfreeze.warnall");
+			WARNALL ("playerfreeze.warnall"),
+            WARNPROT("playerfreeze.warnprotection");
 		private final String permissionName;
 		PluginPermission (String permissionName) {
 			this.permissionName = permissionName;
@@ -251,7 +252,7 @@ public final class PlayerFreeze extends JavaPlugin {
 	}
 
 	public void Warn(Player warned, CommandSender warner, String message) {
-		if (hasPermission(warner, PluginPermission.FREEZE))
+		if (hasPermission(warner, PluginPermission.WARN))
 			if (isFrozen(warned)) {
 				warner.sendMessage(ChatColor.AQUA + warned.getDisplayName() + ChatColor.BLUE + getString("WARN_ALREADY_FROZEN"));
 			} else {
@@ -336,6 +337,10 @@ public final class PlayerFreeze extends JavaPlugin {
 	public boolean isFreezable(Player player) {
 		return !(hasPermission(player, PluginPermission.FREEZEPROT));
 	}
+    
+    public boolean isWarnable(Player player) {
+        return !(hasPermission(player, PluginPermission.WARNPROT));
+    }
 
 	public boolean isAdmin(CommandSender sender) {
 		if (sender instanceof Player) {
